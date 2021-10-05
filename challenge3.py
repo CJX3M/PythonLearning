@@ -11,11 +11,22 @@
 # instructions = '{medicine} - Take {dosage} ML by mouth every {duration} hours'.format(medicine = 'Tylenol', dosage = 2, duration = 4)
 # print(instructions)
 
-name = 'World'
-message = f'Hello {name}'
-print(message)
+# name = 'World'
+# message = f'Hello {name}'
+# print(message)
 
-count = 10
-value = 3.14
-message = f'Count to {count}. Multiply by {value}'
-print(message)
+# count = 10
+# value = 3.14
+# message = f'Count to {count}. Multiply by {value}'
+# print(message)
+
+# width = 5
+heigth = 10
+# print(f'The perimeter is {(2 * width) + (2*heigth)} and the are is {width*heigth}.')
+
+value = 'hi'
+
+print(f'.{value:<25}.')
+print(f'.{value:>25}.')
+print(f'.{value:^25}.')
+print(f'.{value:-^25}.')
