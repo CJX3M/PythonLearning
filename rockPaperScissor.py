@@ -64,20 +64,20 @@ class Game:
             self.secondParticipant.choice = input(f"\r\rPlayer 2 choice (rocks|paper|scissors): ")
         round = GameRound(self.participant, self.secondParticipant)
         round.playRound()
-        print(f'Current Score: \n Player 1: {self.participant.points}\n Player 2: {self.secondParticipant.points}')
-        if self.participant.points > self.secondParticipant.points:
-            print('Player 1 its winning')
-        elif self.participant.points == self.secondParticipant.points:
-            print('Game its even')
-        else:
-            print('Player 2 its winning')
         if self.participant.points == self.maxPoints:
             self.endGame = True
             self.winner = 'Player 1'
         elif self.secondParticipant.points == self.maxPoints:
             self.endGame = True
             self.winner = 'Player 2'
-        if not self.endGame:
+        else: 
+            print(f'Current Score: \n Player 1: {self.participant.points}\n Player 2: {self.secondParticipant.points}')
+            if self.participant.points > self.secondParticipant.points:
+                print('Player 1 its winning')
+            elif self.participant.points == self.secondParticipant.points:
+                print('Game its even')
+            else:
+                print('Player 2 its winning')
             self.participant.choice = ''
             self.secondParticipant.choice = ''
             input('Press enter for the next round')
