@@ -12,58 +12,71 @@ def clear():
   except:
     raise clearNotSupported()
 
+
 class Participant:
-    def __init__(self) -> None:
+    def __init__(self, name) -> None:
+        self.name = name
         self.points = 0
         self.choice = ""
 
+    def choose(self):
+        self.choice = ''
+        while self.choice != 'rocks' and self.choice != 'paper' and self.choice != 'scissors':
+            self.choice = input(f"{self.name} choice (rocks|paper|scissors): ")
+
+    def toNumericalChoice(self):
+        switcher = {
+            "rocks": 0,
+            "paper": 1,
+            "scissors": 2
+        }
+        return switcher[self.choice]
+
+    def increaseScore(self):
+        self.points += 1
+
 class GameRound:
     def __init__(self, participant1, participant2) -> None:
-        self.player1 = participant1
-        self.player2 = participant2
-    def playRound(self):
-        if self.player1.choice.lower() == 'rocks' and self.player2.choice.lower() == 'scissors':
-            print('Player 1 wins this round')
-            self.player1.points += 1
-        elif self.player1.choice.lower() == 'rocks' and self.player2.choice.lower() == 'paper':
-            print('Player 2 wins this round')
-            self.player2.points += 1
-        elif self.player1.choice.lower() == 'rocks' and self.player2.choice.lower() == 'rocks':
-            print('Its a draw')
-        elif self.player1.choice.lower() == 'paper' and self.player2.choice.lower() == 'rocks':
-            print('Player 1 wins this round')
-            self.player1.points += 1
-        elif self.player1.choice.lower() == 'paper' and self.player2.choice.lower() == 'scissors':
-            print('Player 2 wins this round')
-            self.player2.points += 1
-        elif self.player1.choice.lower() == 'paper' and self.player2.choice.lower() == 'paper':
-            print('Its a draw')
-        elif self.player1.choice.lower() == 'scissors' and self.player2.choice.lower() == 'paper':
-            print('Player 1 wins this round')
-            self.player1.points += 1
-        elif self.player1.choice.lower() == 'scissors' and self.player2.choice.lower() == 'rocks':
-            print('Player 2 wins this round')
-            self.player2.points += 1
-        elif self.player1.choice.lower() == 'scissors' and self.player2.choice.lower() == 'scissors':
-            print('Its a draw')    
+        self.rules = [
+            [0, -1, 1],
+            [1, 0, -1],
+            [-1, 1, 0]
+        ]
+        participant1.choose()
+        clear()
+        participant2.choose()
+        result = self.compareChoices(participant1, participant2)
+        winner = ''
+        if result == -1:
+            winner = participant2.name
+            participant2.increaseScore()
+        elif result == 1:
+            winner = participant1.name
+            participant1.increaseScore()
+
+        print(f"{winner} wins this round")
+
+    def compareChoices(self, player1, player2):
+        return self.rules[player1.toNumericalChoice()][player2.toNumericalChoice()]
+    def getResult(self, result):
+        res = {
+            0: 'draw',
+            1: 'win',
+            -1: "loss"
+        }
+        return res[result]
+        
 
         
 class Game:
     def __init__(self) -> None:
         self.endGame = False
-        self.participant = Participant()
-        self.secondParticipant = Participant()
+        self.participant = Participant('Player 1')
+        self.secondParticipant = Participant('Player 2')
         self.maxPoints = ''
         self.winner = ''
     def newRound(self):
-        clear()
-        while self.participant.choice != 'rocks' and self.participant.choice != 'paper' and self.participant.choice != 'scissors':
-            self.participant.choice = input("Player 1 choice (rocks|paper|scissors): ")
-        clear()
-        while self.secondParticipant.choice != 'rocks' and self.secondParticipant.choice != 'paper' and self.secondParticipant.choice != 'scissors':
-            self.secondParticipant.choice = input(f"\r\rPlayer 2 choice (rocks|paper|scissors): ")
-        round = GameRound(self.participant, self.secondParticipant)
-        round.playRound()
+        GameRound(self.participant, self.secondParticipant)        
         if self.participant.points == self.maxPoints:
             self.endGame = True
             self.winner = 'Player 1'
