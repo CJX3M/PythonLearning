@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Shelter(models.Model):
@@ -15,4 +16,7 @@ class Dog(models.Model):
     adoption_date = models.DateField(auto_now_add=True)
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('dogDetail', kwargs={"pk": self.pk})
 

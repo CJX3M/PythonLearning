@@ -11,7 +11,7 @@ Shelter list
     <div>Here is the list of available dogs</div>
     {% for dog in shelter.dog_set.all %}
         <div>
-            <a href="">
+            <a href="{% url 'dogDetail' dog.id %}">
                 {{dog.name}}
             </a>
         </div>
@@ -20,4 +20,9 @@ Shelter list
 {% else %}
     <div>This shelter has no dogs available for adoption</div>
 {% endif %}
+{# TODO: Add link to registration page #}
+<br />
+<div>
+    <a href="{% url 'dogRegister' %}">Register a dog available for adoption</a>
+</div>
 {% endblock %}
